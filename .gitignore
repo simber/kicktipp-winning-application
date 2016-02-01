@@ -1,0 +1,6 @@
+\data
+\build
+\extern
+\scripts
+*.sublime-project
+*.sublime-workspace
