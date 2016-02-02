@@ -14,7 +14,9 @@ namespace kwa
  *
  * @param      estimator  The destination estimator.
  * @param[in]  file_name  file name.
+ *
+ * @return     true if success
  */
-extern void loadMatchesFromCSVFile(MatchEstimator& estimator,
+extern bool loadMatchesFromCSVFile(MatchEstimator& estimator,
                                    const char* file_name);
 }

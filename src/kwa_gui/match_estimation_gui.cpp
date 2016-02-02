@@ -79,13 +79,24 @@ void MatchEstimationGui::loadMatchesCb(Fl_Widget*, void* user)
     // Show native chooser
     switch (gui->m_load_matches_chooser.show()) {
     case -1:
-        printf("ERROR: %s\n", gui->m_load_matches_chooser.errmsg());
+        std::cout << "EROOR\t" << gui->m_load_matches_chooser.errmsg()
+                  << std::endl;
         break; // ERROR
     case 1:
         break; // CANCEL
     default:
-        printf("PICKED: %s\n", gui->m_load_matches_chooser.filename());
-        gui->loadMatches(gui->m_load_matches_chooser.filename());
+        gui->m_estimator.clear();
+        std::cout << "PICKED\t" << gui->m_load_matches_chooser.filename()
+                  << std::endl;
+        ;
+        if (gui->loadMatches(gui->m_load_matches_chooser.filename())) {
+            std::cout << "LOADED\t" << gui->m_estimator.matchCount()
+                      << " matches" << std::endl;
+        } else {
+            std::cout << "EROOR\t"
+                      << " unable to load matches." << std::endl;
+        }
+
         gui->updateTeamNames();
         break; // FILE CHOSEN
     }
