@@ -26,4 +26,5 @@ add_library( ${PROJECT_NAME}
     ${SOURCE_FILES}
 )
 
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_constexpr cxx_return_type_deduction)
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER lib)
