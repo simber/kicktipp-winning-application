@@ -1,21 +1,28 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.2.2)
+
+include("cmake/HunterGate.cmake")
+HunterGate(
+    URL "https://github.com/ruslo/hunter/archive/v0.15.4.tar.gz"
+	SHA1 ac8969dd8c2bc849376006d607bda4052c93aff5
+)
+
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/precompiled_headers.cmake)
 
 project(kwa)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Setup output directories
-SET (CMAKE_LIBRARY_OUTPUT_DIRECTORY
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY
    ${PROJECT_BINARY_DIR}/bin
    CACHE PATH
    "Single directory for all dynamic libraries"
    )
-SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY
    ${PROJECT_BINARY_DIR}/bin
    CACHE PATH
    "Single directory for all executables."
    )
-SET (CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY
    ${PROJECT_BINARY_DIR}/lib
    CACHE PATH
    "Single directory for all static libraries."
@@ -24,34 +31,25 @@ SET (CMAKE_ARCHIVE_OUTPUT_DIRECTORY
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Setup build options
-OPTION( KWA_BUILD_TESTS "Build unit tests." ON )
+option( KWA_BUILD_TESTS "Build unit tests." ON )
 
 
 # Add extern dependencies
+find_package(Threads)
+hunter_add_package(Qt)
+find_package(Qt5Widgets REQUIRED)
 
-add_definitions(-std=gnu++14)
 if(KWA_BUILD_TESTS)
-    enable_testing()
-    ADD_SUBDIRECTORY( extern/cmake/gmock )
-ENDIF(KWA_BUILD_TESTS)  
+    hunter_add_package(GTest)
+	find_package(GTest CONFIG REQUIRED)
+endif(KWA_BUILD_TESTS)  
 
-SET( GSL_INCLUDE_DIRS extern/gsl/include ) 
-
-add_definitions(-Werror)
-add_definitions(-Weverything)
-add_definitions(-Wno-c++98-compat)
-add_definitions(-Wno-c++98-compat-pedantic)
-add_definitions(-Wno-old-style-cast)
-add_definitions(-Wno-padded)
-add_definitions(-Wno-system-headers)
-add_definitions(-Wno-weak-vtables)
-
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib)
 # Add projects
-ADD_SUBDIRECTORY( src/kwa_core )
-ADD_SUBDIRECTORY( src/kwa_gui )
+add_subdirectory( src/lib/kwa_core )
+add_subdirectory( src/lib/kwa_gui )
+add_subdirectory( src/app/kwa_gui_app )
 
 if(KWA_BUILD_TESTS)
-    add_definitions(-Wno-global-constructors)
-
-    ADD_SUBDIRECTORY( src/kwa_core_test )
+    add_subdirectory( src/test/kwa_core_test )
 ENDIF(KWA_BUILD_TESTS) 

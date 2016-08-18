@@ -129,7 +129,7 @@ int kwa::StatsProvider::getGuestStats(TeamId team, size_t num_matches,
                                       TeamStats& out) const
 {
     auto& team_data = getTeamData(team);
-    assert(team_data.home_goals.size() > 0);
+    assert(team_data.away_goals.size() > 0);
     size_t last_match = team_data.away_goals.size() - 1;
 
     int sum_goals = num_matches > last_match
