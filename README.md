@@ -36,7 +36,7 @@ Note that both Teams MUST have statistics in the database to call the estimate f
 estimator.hasHomeStatistics("Munich");
 estimator.hasGuestStatistics("Dortmund");
 ```
-After calling estimate you can check the result kwa::MatchEstimation has the following members:
+After calling estimate you can check the result. kwa::MatchEstimation has the following members:
 * three_way_probabilities[i]: The odds for the three different result types. i=0 home teams wins, i=1 draw, i=2 guest team wins.
 * best_result_bet_home_goals, best_result_bet_guest_goals: Estimated best bet for a bet on kicktipp.de etc. 
 * best_result_bet_ev: The estimated expected value of the best bet, in points.
@@ -47,7 +47,7 @@ After calling estimate you can check the result kwa::MatchEstimation has the fol
 * time-variation of properties
 
 ### Used:
-* [FLTK] (http://www.fltk.org)
+* [Qt5] (https://www.qt.io/)
 * http://www.football-data.co.uk/
 * Prediction and Retrospective Analysis of Soccer Matches in a League (Håvard Rue and Øyvind Salvesen, 1997)
 * Modelling Association Football Scores and Inefficiencies in the Football Betting Market (Dixon and Coles, 1996)
